@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script>
+    function onSubmit(token) {
+      alert('thanks ' + document.getElementById('field').value+token);
+       $.ajax({
+            		url: '/v2/verify/invisible',
+            		type: 'POST',
+                    data: {"g-recaptcha-response":token},
+            		success: function(result) {
+                        document.getElementById('result').innerText= JSON.stringify(result);
+                       return result;
+            		}
+        });
+    }
+
+    function validate(event) {
+      event.preventDefault();
+      if (!document.getElementById('field').value) {
+        alert("You must add text to the required field");
+      } else {
+        grecaptcha.execute();
+      }
+    }
+
+    function onload() {
+      var element = document.getElementById('submit');
+      element.onclick = validate;
+    }
+  </script>
+  <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
+  </head>
+  <body>
+    <form action="?" method="POST">
+      姓名: (必填) <input id="field" name="field">
+      <div id='recaptcha' class="g-recaptcha"
+          data-sitekey="{{site_key}}"
+          data-callback="onSubmit"
+          data-size="invisible"></div>
+      <button id='submit' >submit</button>
+    </form>
+    <div id="result"></div>
+    <script>onload();</script>
+  </body>
+</html>

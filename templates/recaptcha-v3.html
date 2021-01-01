@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>reCAPTCHA v3 </title>
+
+<!--    <script src="https://www.google.com/recaptcha/api.js"></script>-->
+    <script src="https://www.recaptcha.net/recaptcha/api.js"></script>
+</head>
+
+<body>
+<h1>reCAPTCHA v3 测试</h1>
+ <script>
+   function onSubmit(token) {
+       //回调处理
+       console.log(token);
+     document.getElementById("demo-form").submit();
+   }
+ </script>
+<form action="/v3/verify" method="post" id="demo-form">
+    <input name="username" value="" placeholder="用户名，随便输入">
+    <input name="version" value="V3" hidden>
+    <button class="g-recaptcha"
+        data-sitekey="{{ site_key }}"
+        data-callback='onSubmit'
+        data-action='login'>提交</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+
+<html>
+  <head>
+    <title>reCAPTCHA v2 invisible 测试</title>
+     <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
+     <script>
+       function onSubmit(token) {
+         alert(token);
+         document.getElementById("demo-form").submit();
+       }
+     </script>
+  </head>
+  <body>
+    <form id='demo-form' action="/v2/verify/invisible" method="POST">
+      <button class="g-recaptcha" data-sitekey="{{site_key}}" data-callback='onSubmit'>Submit</button>
+      <br/>
+    </form>
+  </body>
+</html>

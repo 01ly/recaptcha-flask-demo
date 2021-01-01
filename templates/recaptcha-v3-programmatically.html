@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>recaptcha v3 验证</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src='https://www.recaptcha.net/recaptcha/api.js?render={{ site_key }}'></script>
+</head>
+<body>
+人机验证得分为：<span id="span"></span>
+<script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute("{{ site_key }}",{action:'login'}).then(function(token) {
+            	$.ajax({
+            		url: '/v3/verify',
+            		type: 'POST',
+                    data: {"g-recaptcha-response":token},
+            		success: function(result) {
+            		    var data=result;
+                        if(data.score>0.5){
+            		        console.log('你是人');
+            		        // window.location.href="www.baidu.com" ;
+                        }else{
+                            console.log('你是机器人');
+                        }
+                        document.getElementById('span').innerText=data.score;
+            			console.log(data.score);
+            		},
+            		error: function (XMLHttpRequest, textStatus, errorThrown) {
+            			errorMsg = "获取身份错误<br/>错误信息：" + textStatus + "错误码：" + XMLHttpRequest.status + '<br/>请刷新重试';
+            			console.log(errorMsg, '网络错误');
+            		}
+            	});
+
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<html>
+  <head>
+
+    <title>reCAPTCHA v2 onload callback 测试</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+        var onSubmit = function(token) {
+          console.log('success!');
+          alert(token);
+                    $.ajax({
+            		url: '/v2/verify/invisible',
+            		type: 'POST',
+                    data: {"g-recaptcha-response":token},
+            		success: function(result) {
+                        document.getElementById('result').innerText= JSON.stringify(result);
+                       return result;
+            		}
+        });
+        };
+
+        var onloadCallback = function() {
+          grecaptcha.render('submit', {
+            'sitekey' : '{{site_key}}',
+            'callback' : onSubmit
+          });
+        };
+    </script>
+  </head>
+  <body>
+      <input id='submit' type="submit" value="Submit">
+      <p id="result"></p>
+    <script src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
+  </body>
+</html>

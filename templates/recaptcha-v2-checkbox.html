@@ -1,0 +1,24 @@
+<span style="font-size:14px;"><!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>reCAPTCHA v2 测试</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.recaptcha.net/recaptcha/api.js"></script>
+</head>
+<body>
+ <script>
+   function onSubmit(token) {
+       //回调处理
+       alert(token);
+   }
+ </script>
+    <form action="/v2/verify/checkbox" method="post" id="demo-form">
+        <input name="username" value="" placeholder="用户名，随便输入">
+        <input name="version"  value="V2" hidden>
+        <div class="g-recaptcha" data-sitekey="{{ site_key }}" data-action='login' data-callback="onSubmit" ></div>
+        <p><button class="btn btn-primary" type="submit"  >Login</button>
+    </form>
+</body>
+</html>
+</span>
